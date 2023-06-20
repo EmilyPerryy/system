@@ -1,0 +1,67 @@
+class BankAccount:
+    def __init__(self, account_number, balance=0):
+        self.account_number = account_number
+        self.balance = balance
+
+    def deposit(self, amount):
+        self.balance += amount
+
+    def withdraw(self, amount):
+        if amount <= self.balance:
+            self.balance -= amount
+
+    def check_balance(self):
+        return self.balance
+
+
+accounts = {}
+
+def create_account():
+    account_number = input("Enter the account number: ")
+    initial_balance = float(input("Enter the initial balance: "))
+    accounts[account_number] = BankAccount(account_number, initial_balance)
+    print(f"Account {account_number} created successfully.")
+
+
+def menu():
+    while True:
+        print("\nBanking System")
+        print("1. Create Account")
+        print("2. Deposit")
+        print("3. Withdraw")
+        print("4. Check Balance")
+        print("5. Exit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            create_account()
+        elif choice == "2":
+            account_number = input("Enter the account number: ")
+            amount = float(input("Enter the deposit amount: "))
+            if account_number in accounts:
+                accounts[account_number].deposit(amount)
+            else:
+                print("Invalid account number.")
+        elif choice == "3":
+            account_number = input("Enter the account number: ")
+            amount = float(input("Enter the withdrawal amount: "))
+            if account_number in accounts:
+                accounts[account_number].withdraw(amount)
+            else:
+                print("Invalid account number.")
+        elif choice == "4":
+            account_number = input("Enter the account number: ")
+            if account_number in accounts:
+                balance = accounts[account_number].check_balance()
+                print(f"Account {account_number} balance: {balance}")
+            else:
+                print("Invalid account number.")
+        elif choice == "5":
+            print("Thank you for using the Banking System. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+
+menu()
